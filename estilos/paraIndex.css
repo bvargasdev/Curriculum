@@ -43,6 +43,7 @@ body {
     font-size: 16px;
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
+    padding: 0 40px; /* para que no quede pegado a los bordes */
 }
 
 a {
@@ -68,74 +69,31 @@ button, input {
     outline-offset: 3px;
 }
 
-/* ---------- Utilidades de sección ---------- */
-.section,
-.hero,
-.navbar > * {
-    width: 100%;
-}
-
-.section {
-    padding: 88px 40px;
-    max-width: var(--max-width);
-    margin: 0 auto;
-    border-top: 1px solid var(--border);
-}
-
-.section-alt {
-    background: linear-gradient(180deg, var(--surface-alt), var(--bg));
-}
-
-.section-title {
-    font-family: var(--font-mono);
-    font-size: 0.95rem;
-    font-weight: 500;
-    letter-spacing: 0.02em;
-    text-transform: lowercase;
-    color: var(--text);
-    margin-bottom: 40px;
-}
-
-.section-title::before {
-    content: "$ ./";
-    color: var(--accent-cyan);
-}
-
-.section-caption {
-    margin-top: 24px;
-    max-width: 640px;
-    color: var(--text-muted);
-    font-size: 0.95rem;
-}
-
-/* ---------- Navbar ---------- */
-.navbar {
+/* ---------- NAVBAR ---------- */
+nav {
     display: flex;
     align-items: center;
     justify-content: space-between;
     max-width: var(--max-width);
     margin: 0 auto;
-    padding: 24px 40px;
+    padding: 24px 0;
     border-bottom: 1px solid var(--border);
 }
 
-.nav-brand {
+/* Simulamos un "brand" con el primer enlace o con un pseudo-elemento */
+nav::before {
+    content: "$ bvargasdev";
     font-family: var(--font-display);
     font-weight: 700;
     font-size: 1.1rem;
     letter-spacing: 0.04em;
+    color: var(--text);
 }
-
-.nav-brand-accent {
+nav::before .accent {
     color: var(--accent-cyan);
 }
 
-.nav-links {
-    display: flex;
-    gap: 32px;
-}
-
-.nav-link {
+nav a {
     font-family: var(--font-mono);
     font-size: 0.8rem;
     color: var(--text-muted);
@@ -144,9 +102,10 @@ button, input {
     position: relative;
     padding-bottom: 4px;
     transition: color 0.2s ease;
+    margin-left: 24px;
 }
 
-.nav-link::before {
+nav a::before {
     content: "";
     position: absolute;
     left: 0;
@@ -159,42 +118,47 @@ button, input {
     transition: transform 0.25s ease;
 }
 
-.nav-link:hover,
-.nav-link.is-active {
+nav a:hover,
+nav a:first-of-type {
     color: var(--text);
 }
 
-.nav-link:hover::before,
-.nav-link.is-active::before {
+nav a:hover::before,
+nav a:first-of-type::before {
     transform: scaleX(1);
 }
 
-/* ---------- Hero ---------- */
-.hero {
+/* Ajuste para que el primer enlace (Inicio) se vea activo */
+nav a:first-of-type {
+    color: var(--text);
+}
+
+/* ---------- HERO (HEADER) ---------- */
+header {
     display: grid;
     grid-template-columns: 1.15fr 0.85fr;
     gap: 64px;
     max-width: var(--max-width);
     margin: 0 auto;
-    padding: 96px 40px 100px;
+    padding: 80px 0 60px;
     align-items: center;
 }
 
-.hero-eyebrow {
-    display: inline-block;
-    font-family: var(--font-mono);
-    font-size: 0.78rem;
-    color: var(--accent-cyan);
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    padding: 6px 12px;
-    border: 1px solid var(--accent-cyan-dim);
-    border-radius: var(--radius);
-    background: var(--accent-cyan-dim);
-    margin-bottom: 24px;
+/* El primer div dentro del header es el contenido textual */
+header > div:first-child {
+    display: flex;
+    flex-direction: column;
 }
 
-.hero-title {
+/* El segundo div es la foto */
+header > div:last-child {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+}
+
+header h1 {
     font-family: var(--font-display);
     font-weight: 700;
     font-size: clamp(2.4rem, 4.4vw, 3.6rem);
@@ -203,14 +167,22 @@ button, input {
     margin-bottom: 20px;
 }
 
-.hero-subtitle {
+header h1::before {
+    content: "Brandon Vargas R. | "; /* lo dejamos como estaba */
+    color: var(--text);
+}
+
+/* Para separar el "Brandon Vargas R." del resto, lo envolvemos en un span en el HTML, pero como no queremos tocar el HTML, usamos un pseudo-elemento que no es posible. Mejor mantenemos el texto tal cual. */
+
+header p {
     color: var(--text-muted);
     font-size: 1.05rem;
     max-width: 520px;
     margin-bottom: 36px;
 }
 
-.btn-primary {
+/* El enlace "CONTÁCTAME →" */
+header > div:first-child > a {
     display: inline-block;
     background: var(--accent-cyan);
     color: #06120F;
@@ -221,24 +193,26 @@ button, input {
     border-radius: var(--radius);
     letter-spacing: 0.02em;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
+    align-self: flex-start;
+    margin-bottom: 40px;
 }
 
-.btn-primary:hover {
+header > div:first-child > a:hover {
     transform: translateY(-2px);
     box-shadow: 0 10px 24px rgba(70, 224, 196, 0.25);
 }
 
-.lead-form {
+/* Formulario */
+header form {
     display: flex;
     flex-wrap: wrap;
     gap: 12px;
-    margin-top: 40px;
     padding-top: 32px;
     border-top: 1px solid var(--border);
     max-width: 480px;
 }
 
-.input-field {
+header form input {
     flex: 1 1 180px;
     background: var(--surface);
     border: 1px solid var(--border);
@@ -248,15 +222,15 @@ button, input {
     font-size: 0.9rem;
 }
 
-.input-field::placeholder {
+header form input::placeholder {
     color: var(--text-muted);
 }
 
-.input-field:focus {
+header form input:focus {
     border-color: var(--accent-cyan);
 }
 
-.btn-secondary {
+header form button {
     flex: 1 1 100%;
     background: transparent;
     border: 1px solid var(--accent-amber);
@@ -270,67 +244,246 @@ button, input {
     transition: background 0.2s ease, color 0.2s ease;
 }
 
-.btn-secondary:hover {
+header form button:hover {
     background: var(--accent-amber);
     color: #1A1200;
 }
 
-/* ---------- Foto: marco tipo "escaneo de identidad" ---------- */
-.hero-photo {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 16px;
-}
-
-.photo-frame {
-    position: relative;
+/* Foto */
+header > div:last-child img {
     width: 100%;
     max-width: 340px;
     aspect-ratio: 3 / 4;
+    object-fit: cover;
+    border-radius: 2px;
+    filter: grayscale(15%) contrast(1.03);
     padding: 14px;
+    position: relative;
 }
 
-.photo-frame::before,
-.photo-frame::after,
-.photo-frame span {
-    content: "";
+/* Para simular el marco, usamos el contenedor de la imagen (div:last-child) */
+header > div:last-child {
+    position: relative;
 }
 
-.photo-frame::before,
-.photo-frame::after {
+header > div:last-child::before,
+header > div:last-child::after {
     position: absolute;
     width: 28px;
     height: 28px;
     border: 2px solid var(--accent-cyan);
+    content: "";
 }
 
-.photo-frame::before {
+header > div:last-child::before {
     top: 0;
     left: 0;
     border-right: none;
     border-bottom: none;
 }
 
-.photo-frame::after {
+header > div:last-child::after {
     bottom: 0;
     right: 0;
     border-left: none;
     border-top: none;
 }
 
-.photo-img {
-    width: 50%;
-    height: 50%;
-    object-fit: cover;
-    border-radius: 2px;
-    filter: grayscale(15%) contrast(1.03);
+/* Pequeña leyenda debajo de la foto (no la tenemos en el HTML, pero podemos agregarla con pseudo) */
+header > div:last-child::after {
+    /* ya la usamos para el marco, así que mejor añadimos un span en el HTML si se quiere la leyenda */
 }
 
-.photo-caption {
+/* Para añadir la leyenda "identidad digital", como no tenemos un span en el HTML, lo ponemos con un pseudo-elemento en el contenedor, pero para no interferir con el marco, mejor lo dejamos opcional. Si quieres, puedes agregar un <span> manualmente en el HTML. */
+
+/* ---------- SECCIONES ---------- */
+section {
+    padding: 80px 0;
+    max-width: var(--max-width);
+    margin: 0 auto;
+    border-top: 1px solid var(--border);
+}
+
+/* Segunda sección (la del video) con fondo alterno */
+section:nth-of-type(2) {
+    background: linear-gradient(180deg, var(--surface-alt), var(--bg));
+    padding-left: 40px;
+    padding-right: 40px;
+    margin-left: -40px;
+    margin-right: -40px;
+}
+
+/* Títulos de sección (h2) */
+section h2 {
     font-family: var(--font-mono);
-    font-size: 0.72rem;
-    color: var(--text-muted);
+    font-size: 0.95rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
     text-transform: lowercase;
-    letter-spacing: 0.03em;
+    color: var(--text);
+    margin-bottom: 40px;
+}
+
+section h2::before {
+    content: "$ ./";
+    color: var(--accent-cyan);
+}
+
+/* Primera sección: lista de habilidades */
+section:first-of-type ul {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+}
+
+section:first-of-type ul li {
+    background: var(--surface);
+    padding: 28px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    transition: background 0.2s ease;
+}
+
+section:first-of-type ul li:hover {
+    background: var(--surface-alt);
+}
+
+section:first-of-type ul li strong {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.05rem;
+    color: var(--accent-cyan);
+    font-style: normal;
+}
+
+section:first-of-type ul li {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+/* Segunda sección: video */
+section:nth-of-type(2) iframe {
+    width: 100%;
+    max-width: 780px;
+    aspect-ratio: 16 / 9;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: #000;
+    display: block;
+}
+
+section:nth-of-type(2) p {
+    margin-top: 24px;
+    max-width: 640px;
+    color: var(--text-muted);
+    font-size: 0.95rem;
+}
+
+/* Tercera sección: respaldo académico */
+section:last-of-type p {
+    margin-top: 24px;
+    max-width: 640px;
+    color: var(--text-muted);
+    font-size: 0.95rem;
+}
+
+/* Para las instituciones (INA, UNED) como están dentro de párrafos, los estilizamos */
+section:last-of-type p:first-of-type {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.3rem;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+section:last-of-type p:first-of-type::after {
+    content: "✦";
+    color: var(--accent-amber);
+    margin-left: 8px;
+}
+/* Pero como son dos párrafos separados, mejor usamos el segundo párrafo para la descripción */
+section:last-of-type p:nth-of-type(1) {
+    /* INA y UNED */
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.3rem;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+section:last-of-type p:nth-of-type(1)::after {
+    content: "✦";
+    color: var(--accent-amber);
+}
+section:last-of-type p:nth-of-type(2) {
+    margin-top: 24px;
+    max-width: 640px;
+    color: var(--text-muted);
+    font-size: 0.95rem;
+}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 860px) {
+    body {
+        padding: 0 24px;
+    }
+
+    nav {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+        padding: 20px 0;
+    }
+
+    nav a {
+        margin-left: 0;
+        margin-right: 18px;
+    }
+
+    header {
+        grid-template-columns: 1fr;
+        padding-top: 40px;
+        gap: 40px;
+    }
+
+    header > div:last-child {
+        order: -1;
+    }
+
+    header > div:last-child img {
+        max-width: 240px;
+    }
+
+    section:first-of-type ul {
+        grid-template-columns: 1fr;
+    }
+
+    section {
+        padding: 60px 0;
+    }
+
+    section:nth-of-type(2) {
+        padding-left: 24px;
+        padding-right: 24px;
+        margin-left: -24px;
+        margin-right: -24px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    header > div:first-child > a:hover {
+        transform: none;
+    }
 }
