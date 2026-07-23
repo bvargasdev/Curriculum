@@ -68,3 +68,42 @@ button, input {
     outline-offset: 3px;
 }
 
+/* ---------- Utilidades de sección ---------- */
+.section,
+.hero,
+.navbar > * {
+    width: 100%;
+}
+
+.section {
+    padding: 88px 40px;
+    max-width: var(--max-width);
+    margin: 0 auto;
+    border-top: 1px solid var(--border);
+}
+
+.section-alt {
+    background: linear-gradient(180deg, var(--surface-alt), var(--bg));
+}
+
+.section-title {
+    font-family: var(--font-mono);
+    font-size: 0.95rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    text-transform: lowercase;
+    color: var(--text);
+    margin-bottom: 40px;
+}
+
+.section-title::before {
+    content: "$ ./";
+    color: var(--accent-cyan);
+}
+
+.section-caption {
+    margin-top: 24px;
+    max-width: 640px;
+    color: var(--text-muted);
+    font-size: 0.95rem;
+}
