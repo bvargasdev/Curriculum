@@ -1,489 +1,310 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
-
+/* ============================================================
+   ROOT: VARIABLES GLOBALES (CSS Custom Properties)
+   ============================================================ */
 :root {
-    /* Color */
-    --bg: #0A0F1E;
-    --surface: #101830;
-    --surface-alt: #0D1428;
-    --border: rgba(148, 163, 200, 0.16);
-    --text: #E8ECF6;
-    --text-muted: #8D97AE;
-    --accent-cyan: #46E0C4;
-    --accent-cyan-dim: rgba(70, 224, 196, 0.14);
-    --accent-amber: #FFB454;
+    /* --- Fondos y superficies --- */
+    --bg: #0B0F17;                /* Fondo principal (casi negro) */
+    --surface: #111827;           /* Superficies de elementos (nav, tarjetas, inputs) */
+    --surface-alt: #0D1320;       /* Alternativa sutil para fondos secundarios */
+    --border: rgba(148, 163, 184, 0.12); /* Color de bordes con transparencia */
 
-    /* Tipografía */
-    --font-display: 'Space Grotesk', 'Segoe UI', sans-serif;
-    --font-body: 'Inter', 'Segoe UI', sans-serif;
-    --font-mono: 'JetBrains Mono', 'Courier New', monospace;
+    /* --- Texto --- */
+    --text: #F1F5F9;              /* Texto principal (blanco suave) */
+    --text-muted: #94A3B8;        /* Texto secundario o deshabilitado (gris azulado) */
 
-    /* Layout */
-    --max-width: 1120px;
-    --radius: 4px;
+    /* --- Acentos funcionales --- */
+    --accent-cyan: #22D3EE;       /* Cian brillante para enlaces, bordes y hover */
+    --accent-cyan-dim: rgba(34, 211, 238, 0.10); /* Versión con opacidad para fondos */
+    --accent-emerald: #34D399;    /* Verde esmeralda para botones principales */
+    --accent-emerald-dim: rgba(52, 211, 153, 0.10);
+    --accent-rose: #FB7185;       /* Rosa (no se usa en este CSS, pero está declarado) */
+    --accent-rose-dim: rgba(251, 113, 133, 0.10);
 }
 
-/* ---------- Reset base ---------- */
+/* ============================================================
+   RESET BÁSICO
+   ============================================================ */
 * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+    margin: 0;          /* Elimina márgenes por defecto de todos los elementos */
+    padding: 0;         /* Elimina paddings por defecto */
+    box-sizing: border-box; /* Hace que padding y border no afecten al ancho total */
 }
 
-html {
-    scroll-behavior: smooth;
-}
-
+/* ============================================================
+   ESTILOS DEL BODY
+   ============================================================ */
 body {
-    background-color: var(--bg);
-    background-image:
-        radial-gradient(circle at 15% 0%, rgba(70, 224, 196, 0.07), transparent 45%),
-        radial-gradient(circle at 85% 20%, rgba(255, 180, 84, 0.05), transparent 40%);
-    color: var(--text);
-    font-family: var(--font-body);
-    font-size: 16px;
-    line-height: 1.6;
-    -webkit-font-smoothing: antialiased;
-    padding: 0 40px; /* para que no quede pegado a los bordes */
+    background-color: var(--bg);   /* Fondo oscuro general */
+    color: var(--text);            /* Color de texto principal */
+    font-family: 'Inter', 'Segoe UI', system-ui, sans-serif; /* Fuentes modernas */
+    line-height: 1.6;              /* Interlineado legible */
 }
 
-a {
-    color: inherit;
-    text-decoration: none;
-}
-
-ul {
-    list-style: none;
-}
-
-img {
-    max-width: 100%;
-    display: block;
-}
-
-button, input {
-    font-family: inherit;
-}
-
-:focus-visible {
-    outline: 2px solid var(--accent-cyan);
-    outline-offset: 3px;
-}
-
-/* ---------- NAVBAR ---------- */
+/* ============================================================
+   NAVEGACIÓN (barra fija superior)
+   ============================================================ */
 nav {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    max-width: var(--max-width);
-    margin: 0 auto;
-    padding: 24px 0;
-    border-bottom: 1px solid var(--border);
-}
-
-/* Simulamos un "brand" con el primer enlace o con un pseudo-elemento */
-nav::before {
-    content: "$ bvargasdev";
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-size: 1.1rem;
-    letter-spacing: 0.04em;
-    color: var(--text);
-}
-nav::before .accent {
-    color: var(--accent-cyan);
+    background-color: var(--surface);  /* Fondo ligeramente más claro que el body */
+    border-bottom: 1px solid var(--border); /* Línea sutil inferior */
+    padding: 1rem 2rem;                /* Espaciado interno: arriba/abajo 1rem, laterales 2rem */
+    display: flex;                     /* Coloca los enlaces en fila */
+    gap: 2rem;                         /* Separación entre cada enlace */
+    position: sticky;                  /* Fija la barra al hacer scroll */
+    top: 0;                            /* Se mantiene pegada arriba */
+    z-index: 100;                      /* Asegura que esté por encima de otros elementos */
 }
 
 nav a {
-    font-family: var(--font-mono);
-    font-size: 0.8rem;
-    color: var(--text-muted);
-    text-transform: lowercase;
-    letter-spacing: 0.01em;
-    position: relative;
-    padding-bottom: 4px;
-    transition: color 0.2s ease;
-    margin-left: 24px;
+    color: var(--text-muted);          /* Color gris por defecto */
+    text-decoration: none;             /* Quita el subrayado */
+    font-size: 0.875rem;               /* Tamaño de fuente (14px si base=16px) */
+    font-weight: 500;                  /* Peso medio (semibold) */
+    letter-spacing: 0.025em;           /* Espaciado entre letras (ligero) */
+    transition: color 0.2s ease;       /* Suaviza el cambio de color al hacer hover */
+    position: relative;                /* Necesario para el pseudo-elemento ::after */
 }
 
-nav a::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    height: 1px;
-    background: var(--accent-cyan);
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 0.25s ease;
+nav a:hover {
+    color: var(--accent-cyan);         /* Al pasar el mouse, se vuelve cian */
 }
 
-nav a:hover,
-nav a:first-of-type {
-    color: var(--text);
+/* Subrayado animado que aparece desde la izquierda */
+nav a::after {
+    content: '';                       /* Pseudo-elemento vacío pero con contenido generado */
+    position: absolute;                /* Posicionamiento absoluto respecto al enlace */
+    bottom: -4px;                      /* Se coloca 4px debajo del texto */
+    left: 0;                           /* Comienza desde la izquierda */
+    width: 0;                          /* Inicialmente ancho 0 (invisible) */
+    height: 2px;                       /* Altura de la línea */
+    background: var(--accent-cyan);    /* Color de la línea */
+    transition: width 0.3s ease;       /* Anima el ancho cuando cambia */
 }
 
-nav a:hover::before,
-nav a:first-of-type::before {
-    transform: scaleX(1);
+nav a:hover::after {
+    width: 100%;                       /* Al hacer hover, la línea ocupa todo el ancho */
 }
 
-/* Ajuste para que el primer enlace (Inicio) se vea activo */
-nav a:first-of-type {
-    color: var(--text);
-}
-
-/* ---------- HERO (HEADER) ---------- */
+/* ============================================================
+   HEADER (presentación principal)
+   ============================================================ */
 header {
-    display: grid;
-    grid-template-columns: 1.15fr 0.85fr;
-    gap: 64px;
-    max-width: var(--max-width);
-    margin: 0 auto;
-    padding: 80px 0 60px;
-    align-items: center;
+    display: grid;                     /* Usamos grid para dos columnas */
+    grid-template-columns: 1fr 1fr;    /* Dos columnas de igual tamaño */
+    gap: 4rem;                         /* Separación entre columnas */
+    padding: 4rem 2rem;                /* Espaciado interno */
+    max-width: 1200px;                 /* Ancho máximo para no estirarse en pantallas grandes */
+    margin: 0 auto;                    /* Centra el header horizontalmente */
+    align-items: center;               /* Centra verticalmente el contenido de ambas columnas */
 }
 
-/* El primer div dentro del header es el contenido textual */
-header > div:first-child {
-    display: flex;
-    flex-direction: column;
-}
-
-/* El segundo div es la foto */
-header > div:last-child {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 16px;
-}
-
+/* Título principal */
 header h1 {
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-size: clamp(2.4rem, 4.4vw, 3.6rem);
-    line-height: 1.08;
-    letter-spacing: -0.01em;
-    margin-bottom: 20px;
+    font-size: 2.5rem;                 /* Tamaño grande (40px) */
+    font-weight: 700;                  /* Negrita */
+    line-height: 1.2;                  /* Interlineado más ajustado */
+    margin-bottom: 1rem;               /* Separación inferior */
+    /* Efecto degradado en el texto (solo funciona con -webkit- en algunos navegadores) */
+    background: linear-gradient(135deg, var(--text) 0%, var(--accent-cyan) 100%);
+    -webkit-background-clip: text;     /* Recorta el fondo al área del texto (WebKit) */
+    -webkit-text-fill-color: transparent; /* Hace que el texto sea transparente para ver el fondo */
+    background-clip: text;             /* Versión estándar (aunque no todos los navegadores lo soportan) */
 }
 
-header h1::before {
-    content: "Brandon Vargas R. | "; /* lo dejamos como estaba */
-    color: var(--text);
-}
-
-/* Para separar el "Brandon Vargas R." del resto, lo envolvemos en un span en el HTML, pero como no queremos tocar el HTML, usamos un pseudo-elemento que no es posible. Mejor mantenemos el texto tal cual. */
-
+/* Párrafo introductorio */
 header p {
-    color: var(--text-muted);
-    font-size: 1.05rem;
-    max-width: 520px;
-    margin-bottom: 36px;
+    color: var(--text-muted);          /* Color más suave */
+    font-size: 1.125rem;               /* 18px */
+    margin-bottom: 2rem;               /* Espacio antes del botón */
+    max-width: 540px;                  /* Limita el ancho para mejor legibilidad */
 }
 
-/* El enlace "CONTÁCTAME →" */
-header > div:first-child > a {
-    display: inline-block;
-    background: var(--accent-cyan);
-    color: #06120F;
-    font-family: var(--font-mono);
-    font-size: 0.85rem;
-    font-weight: 500;
-    padding: 14px 26px;
-    border-radius: var(--radius);
-    letter-spacing: 0.02em;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-    align-self: flex-start;
-    margin-bottom: 40px;
+/* Botón CTA (llamada a la acción) */
+header a[href="informacion_personal.html"] {
+    display: inline-flex;              /* Para alinear icono y texto (aunque no hay icono) */
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--accent-cyan-dim); /* Fondo con opacidad */
+    color: var(--accent-cyan);          /* Texto cian */
+    padding: 0.875rem 1.5rem;           /* 14px vertical, 24px horizontal */
+    border-radius: 8px;                 /* Bordes redondeados */
+    text-decoration: none;              /* Sin subrayado */
+    font-weight: 600;
+    font-size: 0.875rem;
+    letter-spacing: 0.05em;
+    border: 1px solid rgba(34, 211, 238, 0.2); /* Borde sutil */
+    transition: all 0.2s ease;          /* Transición para todos los cambios */
+    margin-bottom: 2rem;                /* Separación con el formulario */
 }
 
-header > div:first-child > a:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 24px rgba(70, 224, 196, 0.25);
+header a:hover {
+    background: var(--accent-cyan);     /* Fondo sólido cian */
+    color: var(--bg);                   /* Texto oscuro para contraste */
+    box-shadow: 0 0 20px rgba(34, 211, 238, 0.3); /* Sombra luminosa */
 }
 
-/* Formulario */
-header form {
+/* ============================================================
+   FORMULARIO (dentro del header)
+   ============================================================ */
+form {
     display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    padding-top: 32px;
-    border-top: 1px solid var(--border);
-    max-width: 480px;
+    flex-direction: column;            /* Coloca los campos en columna */
+    gap: 1rem;                         /* Separación entre campos */
+    max-width: 400px;                  /* Ancho máximo para no estirarse */
 }
 
-header form input {
-    flex: 1 1 180px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 12px 14px;
-    color: var(--text);
-    font-size: 0.9rem;
+/* Campos de entrada */
+form input {
+    background: var(--surface);        /* Fondo igual que la barra de navegación */
+    border: 1px solid var(--border);   /* Borde sutil */
+    border-radius: 8px;
+    padding: 0.875rem 1rem;            /* Relleno interno */
+    color: var(--text);                /* Texto blanco */
+    font-size: 0.875rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease; /* Suaviza cambios */
 }
 
-header form input::placeholder {
-    color: var(--text-muted);
+form input::placeholder {
+    color: var(--text-muted);          /* Color del texto de marcador de posición */
 }
 
-header form input:focus {
-    border-color: var(--accent-cyan);
+form input:focus {
+    outline: none;                     /* Quita el borde de enfoque predeterminado */
+    border-color: var(--accent-cyan);  /* Borde cian al enfocar */
+    box-shadow: 0 0 0 3px var(--accent-cyan-dim); /* Sombra externa con opacidad */
 }
 
-header form button {
-    flex: 1 1 100%;
-    background: transparent;
-    border: 1px solid var(--accent-amber);
-    color: var(--accent-amber);
-    font-family: var(--font-mono);
-    font-size: 0.8rem;
-    letter-spacing: 0.02em;
-    padding: 12px 18px;
-    border-radius: var(--radius);
-    cursor: pointer;
-    transition: background 0.2s ease, color 0.2s ease;
+/* Botón del formulario */
+form button {
+    background: var(--accent-emerald); /* Fondo verde esmeralda */
+    color: var(--bg);                  /* Texto oscuro */
+    border: none;
+    border-radius: 8px;
+    padding: 0.875rem 1.5rem;
+    font-weight: 600;
+    font-size: 0.875rem;
+    letter-spacing: 0.05em;
+    cursor: pointer;                   /* Cambia el cursor a mano */
+    transition: all 0.2s ease;
 }
 
-header form button:hover {
-    background: var(--accent-amber);
-    color: #1A1200;
+form button:hover {
+    background: #10B981;               /* Verde un poco más oscuro */
+    box-shadow: 0 0 20px rgba(52, 211, 153, 0.3); /* Brillo alrededor */
 }
 
-/* Foto */
-header > div:last-child img {
-    width: 100%;
-    max-width: 340px;
-    aspect-ratio: 3 / 4;
-    object-fit: cover;
-    border-radius: 2px;
-    filter: grayscale(15%) contrast(1.03);
-    padding: 14px;
-    position: relative;
+/* ============================================================
+   IMAGEN DEL HEADER
+   ============================================================ */
+header img {
+    width: 100%;                       /* Ocupa todo el ancho de su contenedor */
+    max-width: 400px;                  /* Pero no crece más de 400px */
+    border-radius: 16px;               /* Esquinas redondeadas */
+    border: 1px solid var(--border);   /* Borde sutil */
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); /* Sombra elevada */
 }
 
-/* Para simular el marco, usamos el contenedor de la imagen (div:last-child) */
-header > div:last-child {
-    position: relative;
-}
-
-header > div:last-child::before,
-header > div:last-child::after {
-    position: absolute;
-    width: 28px;
-    height: 28px;
-    border: 2px solid var(--accent-cyan);
-    content: "";
-}
-
-header > div:last-child::before {
-    top: 0;
-    left: 0;
-    border-right: none;
-    border-bottom: none;
-}
-
-header > div:last-child::after {
-    bottom: 0;
-    right: 0;
-    border-left: none;
-    border-top: none;
-}
-
-/* Pequeña leyenda debajo de la foto (no la tenemos en el HTML, pero podemos agregarla con pseudo) */
-header > div:last-child::after {
-    /* ya la usamos para el marco, así que mejor añadimos un span en el HTML si se quiere la leyenda */
-}
-
-/* Para añadir la leyenda "identidad digital", como no tenemos un span en el HTML, lo ponemos con un pseudo-elemento en el contenedor, pero para no interferir con el marco, mejor lo dejamos opcional. Si quieres, puedes agregar un <span> manualmente en el HTML. */
-
-/* ---------- SECCIONES ---------- */
+/* ============================================================
+   SECCIONES GENÉRICAS (cada section después del header)
+   ============================================================ */
 section {
-    padding: 80px 0;
-    max-width: var(--max-width);
-    margin: 0 auto;
-    border-top: 1px solid var(--border);
+    max-width: 1200px;                 /* Mismo ancho máximo que el header */
+    margin: 0 auto;                    /* Centrado */
+    padding: 4rem 2rem;                /* Mismo espaciado */
+    border-top: 1px solid var(--border); /* Línea divisoria entre secciones */
 }
 
-/* Segunda sección (la del video) con fondo alterno */
-section:nth-of-type(2) {
-    background: linear-gradient(180deg, var(--surface-alt), var(--bg));
-    padding-left: 40px;
-    padding-right: 40px;
-    margin-left: -40px;
-    margin-right: -40px;
-}
-
-/* Títulos de sección (h2) */
 section h2 {
-    font-family: var(--font-mono);
-    font-size: 0.95rem;
-    font-weight: 500;
-    letter-spacing: 0.02em;
-    text-transform: lowercase;
+    font-size: 1.5rem;                 /* 24px */
+    font-weight: 700;
+    margin-bottom: 1.5rem;
     color: var(--text);
-    margin-bottom: 40px;
+    letter-spacing: -0.025em;          /* Reducción ligera del espaciado entre letras */
 }
 
-section h2::before {
-    content: "$ ./";
-    color: var(--accent-cyan);
-}
-
-/* Primera sección: lista de habilidades */
-section:first-of-type ul {
+/* ============================================================
+   LISTA DEL PERFIL (primer section > ul)
+   ============================================================ */
+section ul {
+    list-style: none;                  /* Quita los puntos de lista */
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1px;
-    background: var(--border);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    overflow: hidden;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Columnas adaptables */
+    gap: 1.5rem;
 }
 
-section:first-of-type ul li {
+section ul li {
     background: var(--surface);
-    padding: 28px 24px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    transition: background 0.2s ease;
-}
-
-section:first-of-type ul li:hover {
-    background: var(--surface-alt);
-}
-
-section:first-of-type ul li strong {
-    font-family: var(--font-display);
-    font-weight: 600;
-    font-size: 1.05rem;
-    color: var(--accent-cyan);
-    font-style: normal;
-}
-
-section:first-of-type ul li {
-    color: var(--text-muted);
-    font-size: 0.9rem;
-}
-
-/* Segunda sección: video */
-section:nth-of-type(2) iframe {
-    width: 100%;
-    max-width: 780px;
-    aspect-ratio: 16 / 9;
     border: 1px solid var(--border);
-    border-radius: var(--radius);
-    background: #000;
-    display: block;
+    border-radius: 12px;
+    padding: 1.5rem;
+    transition: transform 0.2s ease, border-color 0.2s ease; /* Animación al hover */
 }
 
-section:nth-of-type(2) p {
-    margin-top: 24px;
-    max-width: 640px;
+section ul li:hover {
+    transform: translateY(-2px);       /* Levanta ligeramente la tarjeta */
+    border-color: var(--accent-cyan);  /* Borde cian */
+}
+
+/* Etiqueta (strong) dentro de cada ítem */
+section ul li strong {
+    color: var(--accent-cyan);
+    display: block;                    /* Ocupa toda la línea */
+    margin-bottom: 0.5rem;
+    font-size: 0.875rem;
+    text-transform: uppercase;         /* MAYÚSCULAS */
+    letter-spacing: 0.1em;             /* Mayor espaciado */
+}
+
+/* Texto descriptivo */
+section ul li {
     color: var(--text-muted);
-    font-size: 0.95rem;
+    font-size: 0.9375rem;              /* 15px */
 }
 
-/* Tercera sección: respaldo académico */
-section:last-of-type p {
-    margin-top: 24px;
-    max-width: 640px;
+/* ============================================================
+   VIDEO (segundo section)
+   ============================================================ */
+section iframe {
+    width: 100%;
+    max-width: 560px;                  /* Tamaño típico de YouTube */
+    aspect-ratio: 16/9;                /* Mantiene proporción 16:9 automáticamente */
+    border-radius: 12px;
+    border: 1px solid var(--border);
+}
+
+section p {
     color: var(--text-muted);
-    font-size: 0.95rem;
+    margin-top: 1rem;
+    font-size: 0.875rem;
 }
 
-/* Para las instituciones (INA, UNED) como están dentro de párrafos, los estilizamos */
-section:last-of-type p:first-of-type {
-    font-family: var(--font-display);
+/* ============================================================
+   INSTITUCIONES (tercer section) - Sobrescritura de estilos
+   ============================================================ */
+/* Los dos primeros párrafos dentro del tercer section (los que dicen INA y UNED) */
+section:nth-of-type(3) p:first-of-type,
+section:nth-of-type(3) p:nth-of-type(2) {
+    color: var(--accent-emerald);      /* Verde esmeralda */
     font-weight: 600;
-    font-size: 1.3rem;
-    color: var(--text);
-    display: flex;
-    align-items: center;
-    gap: 16px;
+    font-size: 1.125rem;               /* 18px */
+    margin-bottom: 0.25rem;
 }
 
-section:last-of-type p:first-of-type::after {
-    content: "✦";
-    color: var(--accent-amber);
-    margin-left: 8px;
-}
-/* Pero como son dos párrafos separados, mejor usamos el segundo párrafo para la descripción */
-section:last-of-type p:nth-of-type(1) {
-    /* INA y UNED */
-    font-family: var(--font-display);
-    font-weight: 600;
-    font-size: 1.3rem;
-    color: var(--text);
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-section:last-of-type p:nth-of-type(1)::after {
-    content: "✦";
-    color: var(--accent-amber);
-}
-section:last-of-type p:nth-of-type(2) {
-    margin-top: 24px;
-    max-width: 640px;
-    color: var(--text-muted);
-    font-size: 0.95rem;
-}
+/* ============================================================
+   RESPONSIVE (para pantallas menores a 768px)
+   ============================================================ */
+@media (max-width: 768px) {
+    header {
+        grid-template-columns: 1fr;    /* Una sola columna */
+        text-align: center;            /* Texto centrado */
+    }
 
-/* ---------- RESPONSIVE ---------- */
-@media (max-width: 860px) {
-    body {
-        padding: 0 24px;
+    header img {
+        margin: 0 auto;                /* Centra la imagen */
     }
 
     nav {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 16px;
-        padding: 20px 0;
-    }
-
-    nav a {
-        margin-left: 0;
-        margin-right: 18px;
-    }
-
-    header {
-        grid-template-columns: 1fr;
-        padding-top: 40px;
-        gap: 40px;
-    }
-
-    header > div:last-child {
-        order: -1;
-    }
-
-    header > div:last-child img {
-        max-width: 240px;
-    }
-
-    section:first-of-type ul {
-        grid-template-columns: 1fr;
-    }
-
-    section {
-        padding: 60px 0;
-    }
-
-    section:nth-of-type(2) {
-        padding-left: 24px;
-        padding-right: 24px;
-        margin-left: -24px;
-        margin-right: -24px;
-    }
-}
-
-@media (prefers-reduced-motion: reduce) {
-    html {
-        scroll-behavior: auto;
-    }
-
-    header > div:first-child > a:hover {
-        transform: none;
+        flex-wrap: wrap;               /* Permite que los enlaces salten a otra línea */
+        justify-content: center;       /* Centra los enlaces */
+        gap: 1rem;                     /* Reduce el espacio entre ellos */
     }
 }
